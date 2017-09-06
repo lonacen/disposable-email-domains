@@ -57,6 +57,34 @@ def reject_email_blacklist
   end
 end
 ```
+**NodeJs** contributed by @martin-fogelman
+
+```Node
+'use strict';
+
+const readline = require('readline'),
+  fs = require('fs');
+
+const input = fs.createReadStream('./disposable_email_blacklist.conf'),
+  output = [],
+  rl = readline.createInterface({input});
+
+// PROCESS LINES
+rl.on('line', (line) => {
+  console.log(`Processing line ${output.length}`);
+  output.push(line);
+});
+
+// SAVE AS JSON
+rl.on('close', () => {
+  try {
+    const json = JSON.stringify(output);
+    fs.writeFile('disposable_email_blacklist.json', json, () => console.log('--- FINISHED ---'));
+  } catch (e) {
+    console.log(e);
+  }
+});
+```
 
 Contributing
 ============
@@ -72,6 +100,8 @@ to add contents of another file in the same format (only second level domains on
 
 Changelog
 ============
+
+* 7/31/17 @deguif [joined](https://github.com/martenson/disposable-email-domains/issues/106) as a core maintainer of this project. Thanks!
 
 * 12/6/16 - Available as [PyPI module](https://pypi.python.org/pypi/disposable-email-domains) thanks to @di
 
